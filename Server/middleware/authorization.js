@@ -1,4 +1,5 @@
 function authorization (request, response ,next){
+  console.log('authorizeeeee===============================================')
     if (request.authenticateData.role==='admin'){
         next()
     } else {

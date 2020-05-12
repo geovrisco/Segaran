@@ -12,16 +12,16 @@ module.exports = {
         type: Sequelize.STRING
       },
       text: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       category: {
         type: Sequelize.STRING
       },
       picture: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       media: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       date: {
         type: Sequelize.DATE

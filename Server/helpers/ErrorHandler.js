@@ -1,5 +1,5 @@
 function errorHandler(error, request,response,next) {
-    console.log(error,'=======================')
+    // console.log(error,'=======================')
    if(error.errors){
        let errorsArray = []
        for (let i = 0; i<error.errors.length; i++){

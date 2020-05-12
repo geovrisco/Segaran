@@ -49,6 +49,7 @@ class UserController{
             console.log(compareResult)
             if (compareResult){
                 var token = jwt.sign({id:userData.id, name:userData.name, role:userData.role},process.env.SECRET)
+                console.log('token===================================')
                 response.json({
                     token:token,
                     name:userData.name,
