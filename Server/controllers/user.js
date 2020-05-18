@@ -19,7 +19,7 @@ class UserController{
                     address: request.body.address,
                     phone1: request.body.phone1,
                     phone2: request.body.phone2,
-                    bloodType: request.body.bloodType,
+                    gender: request.body.gender,
                     email: request.body.email,
                     password: request.body.password,
                     role: request.body.role
@@ -48,19 +48,62 @@ class UserController{
         .then(compareResult => {
             console.log(compareResult)
             if (compareResult){
-                var token = jwt.sign({id:userData.id, name:userData.name, role:userData.role},process.env.SECRET)
-                console.log('token===================================')
+                var token = jwt.sign({id:userData.id, name:userData.name, role:userData.role,},process.env.SECRET)
                 response.json({
                     token:token,
                     name:userData.name,
                     role:userData.role,
                     id:userData.id
                 })
+            } else {
+              throw({code:403, message:'user id tidak ditemukan!'})
             }
         })
         .catch(error => {
             next (error)
         })
+    }
+
+    static update(request, response, next){
+      User.update(
+        {
+          fullname: request.body.fullname,
+          dob: request.body.dob,
+          address: request.body.address,
+          phone1: request.body.phone1,
+          phone2: request.body.phone2,
+          gender: request.body.gender,
+        },
+        {
+          where:{id:request.params.id}
+        }
+      )
+      .then(data=>{
+        response.json(data)
+      })
+      .catch(err =>{
+        next(err)
+      })
+    }
+
+    static allUser(request, response, next){
+      User.findAll()
+      .then(data=>{
+        response.json(data)
+      })
+      .catch(error =>{
+        next(error)
+      })
+    }
+
+    static findOne (request,response, next){
+      User.findOne({where:{id:request.params.id}})
+      .then(data => {
+        response.json(data)
+      })
+      .catch(error =>{
+        next(error)
+      })
     }
 
 }
