@@ -70,7 +70,11 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
   profileForm:{
+    width:MAX_WIDTH*0.8,
+  },
+  profileFormMulti:{
     width:MAX_WIDTH*0.65,
+    height:MAX_HEIGHT*0.3
   }
 });
 

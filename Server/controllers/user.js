@@ -67,6 +67,7 @@ class UserController{
     static update(request, response, next){
       User.update(
         {
+          name:request.body.name,
           fullname: request.body.fullname,
           dob: request.body.dob,
           address: request.body.address,
