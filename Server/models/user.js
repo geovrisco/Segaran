@@ -9,54 +9,24 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg:'nama panggilan tidak boleh kosong'
-        },
-        notNull: {
-          msg:'nama panggilan harus diisi'
-        }
-      }
     },
     fullname: {
       type: DataTypes.STRING, 
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'nama lengkap tidak boleh kosong',
+          msg:'nama lengkap tidak boleh kosong'
         },
         notNull: {
-          msg: 'nama lengkap harus diisi'
+          msg:'nama lengkap harus diisi'
         }
       }
     },
     dob: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate:{
-        isDate: {
-          msg: 'format tanggal lahir salah'
-        },
-        notEmpty: {
-          msg: 'tanggal lahir harus diisi'
-        },
-        notNull: {
-          msg: 'tanggal lahir tidak boleh kosong'
-        }
-      }
     },
     address: {
       type:  DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'alamat lengkap tidak boleh kosong',
-        },
-        notNull: {
-          msg: 'alamat lengkap harus diisi'
-        }
-      }
     },
     phone1: {
       type:  DataTypes.STRING,
@@ -71,12 +41,12 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     phone2: DataTypes.STRING,
-    bloodType: {
+    gender: {
       type: DataTypes.STRING,
       validate: {
         isIn:{
-          args:[['O','A','B','AB']],
-          msg:'golongan darah tidak valid'
+          args:[['pria','wanita']],
+          msg:'gender tidak valid'
         }
       }
     },
@@ -106,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Password lengkap harus diisi'
         },
         min:{
-          args:5,
+          args:[5],
           msg:'password minimal 5 huruf/angka'
         }
       }
