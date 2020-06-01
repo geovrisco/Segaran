@@ -1,0 +1,63 @@
+import React, {useEffect} from 'react';
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createStackNavigator } from '@react-navigation/stack'
+import * as Font from 'expo-font'
+import registerForPushNotifications from './helpers/registerpushnotification'
+
+import HomeScreen from './screen/HomeScreen'
+import LoginScreen from './screen/LoginScreen'
+import DetailScreen from './screen/HomeStacks/Detail'
+import useLoginData from './hooks/useLoginData'
+
+const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator()
+
+function mainStackNavigator(){
+  return (
+  <Stack.Navigator>
+    <Stack.Screen name = "home" component = {HomeScreen}></Stack.Screen>
+    <Stack.Screen name = "detail" component = {DetailScreen}></Stack.Screen>
+  </Stack.Navigator>
+  )
+}
+
+export default function App() {
+  const {userName,role,token} = useLoginData()
+  async function loadStaticFiles(){
+    await Font.loadAsync(
+      {
+        'OpenSans':require('./assets/fonts/OpenSans/OpenSans-Regular.ttf')
+      }
+    )
+    console.log('done')
+  }
+
+  useEffect(()=>{
+    loadStaticFiles(),
+    registerForPushNotifications()
+  },[])
+  
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name ="Home" component={mainStackNavigator}/>
+        {
+           !role && !token &&
+          <Tab.Screen name ="Masuk" component={LoginScreen}/>
+        }
+        {
+          role==='admin' &&
+          <Tab.Screen name ="Admin" component={HomeScreen}/>
+        }
+        <Tab.Screen name ="Gereja" component={LoginScreen}/>
+        {
+          role && token &&
+          <Tab.Screen name ="Profil" component={HomeScreen}/>
+        }
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+
+
