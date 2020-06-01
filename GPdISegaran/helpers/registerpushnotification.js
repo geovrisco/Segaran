@@ -10,7 +10,7 @@ const registerForPushNotifications = async ()=>{
   }
   let token = await Notifications.getExpoPushTokenAsync()
   console.log('register token')
-  return fetch(url, {
+  return fetch(`${url}/token`, {
     method:'POST',
     headers:{
       Accept:'application/json',

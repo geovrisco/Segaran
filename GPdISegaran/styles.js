@@ -69,6 +69,9 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
   },
+  profileForm:{
+    width:MAX_WIDTH*0.65,
+  }
 });
 
 export default styles

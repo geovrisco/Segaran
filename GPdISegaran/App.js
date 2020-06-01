@@ -3,9 +3,9 @@ import Navigation from './config/navigation'
 import registerForPushNotifications from './helpers/registerpushnotification'
 export default function App() {
 
-  useEffect(()=>{
-    registerForPushNotifications()
-  },[])
+  // useEffect(()=>{
+  //   registerForPushNotifications()
+  // },[])
   
   return (
     <Navigation></Navigation>
