@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -7,6 +7,7 @@ import HomeScreen from '../screen/HomeScreen';
 import DetailScreen from '../screen/HomeStacks/Detail';
 import LoginScreen from '../screen/LoginScreen';
 import ProfileScreen from '../screen/ProfileScreen';
+import { AsyncStorage } from 'react-native';
 
 const NewsStack = createStackNavigator ();
 const NewsStackScreen = () =>(
@@ -39,19 +40,55 @@ const ProfileStackScreen = () =>(
   </ProfileStack.Navigator>
 )
 
+
 const AppTabs = createBottomTabNavigator();
 const AppTabScreen = () =>(
   <AppTabs.Navigator>
     <AppTabs.Screen name="Artikel" component={NewsStackScreen} />
     <AppTabs.Screen name="Masuk" component={LoginRegisterStackScreen}/>
-    <AppTabs.Screen name="Profil" component={ProfileStackScreen}/>
   </AppTabs.Navigator>
 )
 
-
-export default () =>(
-  <NavigationContainer>
-    {/* <AppTabScreen/> */}
-    <ProfileStackScreen/>
-  </NavigationContainer>
+const AppTabsLogin=createBottomTabNavigator();
+const AppTabsLoginScreen = ()=>(
+  <AppTabsLogin.Navigator>
+    <AppTabs.Screen name="Artikel" component={NewsStackScreen} />
+    <AppTabs.Screen name="Profil" component={ProfileStackScreen}/>
+  </AppTabsLogin.Navigator>
 )
+
+
+export default () =>{
+
+  const [name,setName]=useState(null)
+  const [token,setToken]=useState(null)
+  const [id,setId]=useState(null)
+  const [role,setRole]=useState(null)
+
+  async function getAsyncStorageData(){
+    try {
+      const AsyncName = await AsyncStorage.getItem('name')
+      const AsyncToken = await AsyncStorage.getItem('token')
+      const AsyncRole = await AsyncStorage.getItem('role')
+      const AsyncId = await AsyncStorage.getItem('id')
+      setName(AsyncName)
+      setToken(AsyncToken)
+      setRole(AsyncRole)
+      setId(AsyncId)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    getAsyncStorageData()
+  },[])
+
+  return (
+    <NavigationContainer>
+      {token ? <AppTabsLoginScreen/> : <AppTabScreen/>}
+    </NavigationContainer>
+
+  )
+}
+

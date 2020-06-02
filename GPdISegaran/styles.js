@@ -30,6 +30,12 @@ const styles = StyleSheet.create({
     marginTop:MAX_HEIGHT*0.05,
     flex:1,
   },
+  paddingBawah:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center",
+    height:MAX_HEIGHT*1.025
+  },
   Opensans:{
     fontFamily:'OpenSans',
     fontSize:30

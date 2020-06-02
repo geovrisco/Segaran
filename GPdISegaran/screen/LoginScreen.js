@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import LoginForm from "./LoginStacks/LoginForm";
 import RegisterForm from "./LoginStacks/RegisterForm";
 import { Alert } from "react-native";
-function LoginScreen() {
+function LoginScreen({navigation}) {
   const [loginForm, setLoginForm] = useState(true);
   const [fullname, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  
   const toggleForm = () => {
     setLoginForm(!loginForm);
     console.log(loginForm);
@@ -40,6 +40,7 @@ function LoginScreen() {
             setEmail={setEmail}
             password={password}
             setPassword={setPassword}
+            navigation={navigation}
           ></LoginForm>
         </>
       )}

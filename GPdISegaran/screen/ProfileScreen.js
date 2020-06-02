@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { KeyboardAvoidingView, Text, View } from 'react-native'
+import { KeyboardAvoidingView, Text, View, AsyncStorage } from 'react-native'
 
 import ProfileForms from './ProfileForms/ProfileForms'
 import axios from 'axios'
@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 export default function ProfileScreen (){
   const [isLoading,setIsLoading] = useState(true)
-  const [id, setId] = useState(5)
+  const [id, setId] = useState(null)
   const [address,setAddress] = useState(null)
   const [dob,setDob] = useState(null)
   const [fullname,setFullname]=useState(null)
@@ -17,6 +17,13 @@ export default function ProfileScreen (){
   const [name, setName] = useState(null)
   const [phone1,setPhone1] = useState(null)
   const [phone2,setPhone2] = useState(null)
+
+  async function getAsyncStorageId(){
+    const userId = await AsyncStorage.getItem('id')
+    console.log('user id from AsyncStorage is: ',userId)
+    setId(userId)
+    console.log('state hooks id : ',id)
+  }
 
   async function getUserData(){
     console.log('getting userr data')
@@ -67,7 +74,8 @@ export default function ProfileScreen (){
   }
 
   useEffect(()=>{
-    getUserData()
+    getAsyncStorageId()
+    // getUserData()
   },[])
 
 

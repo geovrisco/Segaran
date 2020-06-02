@@ -34,10 +34,6 @@ function HomeScreen({ navigation }) {
         { userName && 
         <>
           <Text>Selamat Datang {userName}</Text>
-          <Button
-            mode="contained"
-            onPress={()=>logout()}
-          >Keluar</Button>
         </>
         }
         </View>

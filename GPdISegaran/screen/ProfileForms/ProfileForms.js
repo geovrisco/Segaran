@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, ScrollView, Picker } from 'react-native'
+import { View, Text, ScrollView, Picker, AsyncStorage } from 'react-native'
 import {Input, Icon, Button} from 'react-native-elements'
 import styles from '../../styles'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -13,6 +13,20 @@ export default function ProfileForms(props){
   const toggleShowDate = () =>{
     setShowDate(!showDate)
   }
+
+  async function logout(){
+    console.log('keluar')
+   try{
+     let keys =['name','role','token','id']
+     const remove = await AsyncStorage.multiRemove(keys)
+     console.log(remove,'ini remove')
+     const getz = await AsyncStorage.multiGet(keys)
+     console.log(getz,'ini get')
+   } catch(err){
+     console.log(err,'ini error dari logout()')
+   }
+ }
+
   const onDateChange =(event, selectedDate) =>{
     console.log(event,'ini event')
     console.log(selectedDate,'ini selected date')
@@ -91,11 +105,18 @@ export default function ProfileForms(props){
         <Picker.Item label ="Pria" value="pria"/>
         <Picker.Item label ="Wanita" value="wanita"/>
       </Picker>
-      <View>
+      <View style={{flexDirection:"row", justifyContent:"center"}}> 
         <Button
-          title="Perbarui Data"
+          title="Perbarui"
           onPress={()=>props.updateUserData()}
+          buttonStyle={{width:100,marginRight:10}}
         />
+          <Button
+            mode="contained"
+            title="LogOut"
+            onPress={()=>logout()}
+            buttonStyle={{width:100,backgroundColor:"red"}}
+          ></Button>
       </View>
     </ScrollView>
   )

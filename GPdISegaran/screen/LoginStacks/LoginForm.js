@@ -13,6 +13,7 @@ const MAX_HEIGHT = Dimensions.get("screen").height;
 export default function LoginForm(props) {
   const [email, setEmail]= useState('')
   const [password, setPassword]= useState('')
+  console.log(props.navigation,"=a=a=a=a=a=a=a==a=a=a=a=a=a==a=a")
 
   const login = async () => {
     try {
@@ -25,6 +26,14 @@ export default function LoginForm(props) {
       setAsyncStorage('token',loginData.token)
       loginData.name === null ? setAsyncStorage('name', 'pengguna') : setAsyncStorage('name',loginData.name)
       setAsyncStorage('role', loginData.role)
+      setAsyncStorage('id', loginData.id)
+
+      props.navigation.navigate("Artikel",{
+        id:loginData.id,
+        token:loginData.token,
+        name:loginData.name
+      })
+
     } catch (error) {
       console.log('error login',props.email,props.password);
       alert(error.response.data.message)
