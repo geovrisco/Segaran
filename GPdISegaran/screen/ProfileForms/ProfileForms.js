@@ -6,7 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 
 export default function ProfileForms(props){
-  console.log(props)
+  // console.log(props)
   const [date, setDate] = useState( new Date('1994-04-23'))
   const [showDate, setShowDate] = useState(false)
 
@@ -15,24 +15,24 @@ export default function ProfileForms(props){
   }
 
   async function logout(){
-    console.log('keluar')
+    // console.log('keluar')
    try{
      let keys =['name','role','token','id']
      const remove = await AsyncStorage.multiRemove(keys)
-     console.log(remove,'ini remove')
+    //  console.log(remove,'ini remove')
      const getz = await AsyncStorage.multiGet(keys)
-     console.log(getz,'ini get')
+    //  console.log(getz,'ini get')
    } catch(err){
      console.log(err,'ini error dari logout()')
    }
  }
 
   const onDateChange =(event, selectedDate) =>{
-    console.log(event,'ini event')
-    console.log(selectedDate,'ini selected date')
+    // console.log(event,'ini event')
+    // console.log(selectedDate,'ini selected date')
     setShowDate(!showDate)
     props.setDob(new Date(selectedDate))
-    console.log(props.dob)
+    // console.log(props.dob)
     setDate(new Date(selectedDate))
   }
 

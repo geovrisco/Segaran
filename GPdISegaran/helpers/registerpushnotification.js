@@ -9,7 +9,7 @@ const registerForPushNotifications = async ()=>{
     return
   }
   let token = await Notifications.getExpoPushTokenAsync()
-  console.log('register token')
+  // console.log('register token')
   return fetch(`${url}/token`, {
     method:'POST',
     headers:{

@@ -4,38 +4,16 @@ import styles from "../styles";
 import { ListItem } from "react-native-elements";
 import axios from "axios";
 import {url}from '../config/variables'
-import useLoginData from '../hooks/useLoginData'
-import { Button } from "react-native-paper";
 
 function HomeScreen({ navigation }) {
-  const {userName,role,token} = useLoginData([])
-  // console.log("home",userName,role,token);
-   async function logout(){
-     console.log('keluar')
-    try{
-      let keys =['name','role','token']
-      const remove = await AsyncStorage.multiRemove(keys)
-      console.log(remove,'ini remove')
-      const getz = await AsyncStorage.multiGet(keys)
-      console.log(getz,'ini get')
-    } catch(err){
-      console.log(err,'ini error dari logout()')
-    }
-  }
+
+
 
   return (
     <>
       <KeyboardAvoidingView style={styles.containerGeo}>
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        {
-          !userName && 
           <Text>Selamat Datang silahkan masuk/daftar</Text>
-        }
-        { userName && 
-        <>
-          <Text>Selamat Datang {userName}</Text>
-        </>
-        }
         </View>
         <ListContent navigation={navigation}></ListContent>
       </KeyboardAvoidingView>

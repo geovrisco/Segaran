@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { KeyboardAvoidingView, Text, View, AsyncStorage } from 'react-native'
+import { KeyboardAvoidingView, Text, View, AsyncStorage, ScrollView } from 'react-native'
 
 import ProfileForms from './ProfileForms/ProfileForms'
 import axios from 'axios'
 import styles from "../styles";
 import {url} from '../config/variables'
-import { ScrollView } from 'react-native-gesture-handler';
+
+
 
 export default function ProfileScreen (){
   const [isLoading,setIsLoading] = useState(true)
@@ -17,20 +18,17 @@ export default function ProfileScreen (){
   const [name, setName] = useState(null)
   const [phone1,setPhone1] = useState(null)
   const [phone2,setPhone2] = useState(null)
-
-  async function getAsyncStorageId(){
-    const userId = await AsyncStorage.getItem('id')
-    console.log('user id from AsyncStorage is: ',userId)
-    setId(userId)
-    console.log('state hooks id : ',id)
-  }
+  let desperateId = null
 
   async function getUserData(){
     console.log('getting userr data')
     try {
-      let result = await axios.get(`${url}/users/${id}`)
-      console.log(result.data)
+      const userId = await AsyncStorage.getItem('id')
+      desperateId=userId
+      let result = await axios.get(`${url}/users/${desperateId}`)
+      // console.log(result.data)
       setAddress(result.data.address)
+      setId(result.data.id)
       setDob(result.data.dob)
       setGender(result.data.gender)
       setName(result.data.name)
@@ -43,9 +41,11 @@ export default function ProfileScreen (){
     }
   }
 
+
+
   function updateUserData(){
-    console.log(id,address,dob,fullname,gender,name,phone1,phone2)
-    setIsLoading(true)
+    // setIsLoading(true)
+    console.log(desperateId,'parameter update')
     axios.put(`${url}/users/${id}`,{
       address:address,
       dob:dob,
@@ -56,16 +56,8 @@ export default function ProfileScreen (){
       phone2:phone2
     })
     .then(data=>{
-      console.log(data)
+      console.log(data,"sukses update")
       setIsLoading(false)
-      console.log('id', id)
-      console.log('address',address)
-      console.log('dob',dob)
-      console.log('fullname',fullname)
-      console.log('gender',gender)
-      console.log('name',name)
-      console.log('phone1',phone1)
-      console.log('phone2',phone2)
     })
     .catch(err=>{
       console.log(err.response)
@@ -73,9 +65,9 @@ export default function ProfileScreen (){
     })
   }
 
+
   useEffect(()=>{
-    getAsyncStorageId()
-    // getUserData()
+    getUserData()
   },[])
 
 
@@ -83,7 +75,6 @@ export default function ProfileScreen (){
     <ScrollView>
     <KeyboardAvoidingView behavior={Platform.OS == "ios"? "padding" : "height"} style={styles.container}>
       {
-        !isLoading &&
         <ProfileForms
           id={id}
           address={address}
@@ -102,12 +93,6 @@ export default function ProfileScreen (){
           setPhone2={setPhone2}
           updateUserData={updateUserData}
         />
-      }
-      {
-        isLoading &&
-        <View>
-          <Text>Loading</Text>
-        </View>
       }
     </KeyboardAvoidingView>
     </ScrollView>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { View, Dimensions, TouchableOpacity } from "react-native";
-import { Icon, Input, Text, Button, withBadge } from "react-native-elements";
+import { Icon, Input, Text } from "react-native-elements";
 import axios from "axios";
 import styles from "../../styles";
 
@@ -13,7 +13,7 @@ const MAX_HEIGHT = Dimensions.get("screen").height;
 export default function LoginForm(props) {
   const [email, setEmail]= useState('')
   const [password, setPassword]= useState('')
-  console.log(props.navigation,"=a=a=a=a=a=a=a==a=a=a=a=a=a==a=a")
+  // console.log(props.navigation,"=a=a=a=a=a=a=a==a=a=a=a=a=a==a=a")
 
   const login = async () => {
     try {
@@ -26,7 +26,7 @@ export default function LoginForm(props) {
       setAsyncStorage('token',loginData.token)
       loginData.name === null ? setAsyncStorage('name', 'pengguna') : setAsyncStorage('name',loginData.name)
       setAsyncStorage('role', loginData.role)
-      setAsyncStorage('id', loginData.id)
+      setAsyncStorage('id', JSON.stringify(loginData.id))
 
       props.navigation.navigate("Artikel",{
         id:loginData.id,
