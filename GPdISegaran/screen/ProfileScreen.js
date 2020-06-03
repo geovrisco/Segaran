@@ -46,7 +46,7 @@ export default function ProfileScreen (){
   function updateUserData(){
     // setIsLoading(true)
     console.log(desperateId,'parameter update')
-    axios.put(`${url}/users/${id}`,{
+    axios.put(`${url}/users/${idg}`,{
       address:address,
       dob:dob,
       fullname:fullname,
