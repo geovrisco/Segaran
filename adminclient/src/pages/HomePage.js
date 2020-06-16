@@ -1,12 +1,14 @@
 import React, {useEffect, useState, useCallback} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {getArticles} from '../store/actions/ArticlesAction'
-import ArticleForm from './HomePage/ArticleForm'
+import {Button} from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 
 function HomePage (){
-  const dispatch = useDispatch()
-  const articles = useSelector(state => state.ArticleReducer.articles)
-
+  const dispatch = useDispatch();
+  const history = useHistory()
+  const articles = useSelector(state => state.ArticleReducer.articles);
+ 
   const functGetArticles = useCallback(()=>{
     dispatch(getArticles())
   },[dispatch])
@@ -26,8 +28,9 @@ function HomePage (){
         <pre>{JSON.stringify(articles,null,2)}</pre>
       </div>
       <div>
-        something
-        <ArticleForm/>
+        <Button color="primary" variant="contained" 
+          onClick={()=> history.push('/createArticle')}
+        >Buat Artikel</Button>
       </div>
     </div>
   )

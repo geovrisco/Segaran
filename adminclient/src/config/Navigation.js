@@ -10,6 +10,7 @@ import { HomePage,
   UsersPage,
   SignIn,
   SignUp,
+  ArticleForm
 } from '../pages'
 import { Navbar } from '../components'
 import {setUserData} from '../store/actions/UsersAction'
@@ -52,6 +53,16 @@ function Navigation(){
               <Route exact path ="/users">
                 <Container>
                   <UsersPage/>
+                </Container>
+              </Route>
+              <Route exact path ="/createArticle">
+                <Container>
+                  <ArticleForm command={"create"}/>
+                </Container>
+              </Route>
+              <Route exact path ="/article/:id">
+                <Container>
+                  <ArticleForm command={'update'}/>
                 </Container>
               </Route>
             </Switch>
