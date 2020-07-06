@@ -1,5 +1,6 @@
 const initialState = {
-  articles:[]
+  articles:[],
+  users:[]
 }
 
 const ArticleReducer = (state = initialState, action) => {
@@ -8,6 +9,8 @@ const ArticleReducer = (state = initialState, action) => {
     case 'GET_ARTICLES':
       return {...state, articles:action.payload.articles}
 
+    case 'GET_USERS':
+      return {...state, users:action.payload.users}
     default: 
       return state
   }

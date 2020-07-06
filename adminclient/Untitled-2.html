@@ -1,0 +1,40 @@
+<!DOCTYPE html>\n<html>
+
+<head>
+  <title>Codility test</title>
+</head>
+
+<body>
+  <table>
+    <tbody>
+      <tr>
+        <td style="color: #ff00ff; background-color:#FFFFFF">Q</td>
+        <td style="background-color: #442244; color: #442244">Y</td>
+        <td style="color: #FFFF00; background-color:#442244">A</td>
+      </tr>
+      <tr>
+        <td style="color: #FFEEFE; background-color:#990000">Q</td>
+        <td style="color: #FFFF00; background-color:#FF0">M</td>
+        <td style="color: #000000; background-color:#FF7777">O</td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    function myFunction() {
+      function solution() {
+    let result = []
+      var list = document.getElementsByTagName("td");
+      for (let i = 0; i < list.length; i++){
+        if (list[i].style.backgroundColor !== list[i].style.color){
+          result.push(list[i].textContent)
+        }
+      }
+      return result.join("")
+}
+
+    }
+    myFunction()
+    </script>
+</body>
+
+</html>

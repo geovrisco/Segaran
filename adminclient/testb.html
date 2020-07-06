@@ -1,0 +1,40 @@
+<!DOCTYPE html><html>
+
+<head>
+  <title>Codility test</title>
+</head>
+
+<body>
+  <h1>Some test tables</h1>
+  <div>
+    
+  </div>
+  <p>Let us see a more regular table below:</p>
+  
+  <script>
+    function solution(){
+      let counter = 0
+      let array = []
+      let table = document.getElementsByTagName("table")
+      console.log(table)
+
+      if (table.length<1){
+        return 0
+      } 
+
+      for (let i = 0; i < table.length;i++){
+        let rows = table[i].rows
+        for (let j = 0; j < rows.length; j++){
+          console.log(rows[j].cells.length)
+          counter += rows[j].cells.length
+        }
+        array.push(counter)
+        counter=0
+      }
+      return (array)
+    }
+    console.log(solution)
+  </script>
+</body>
+
+</html>

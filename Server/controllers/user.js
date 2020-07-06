@@ -107,6 +107,28 @@ class UserController{
       })
     }
 
+    static findByMonth(request, response ,next){
+      let result = []
+      let currentDate = new Date()
+      let currentMonth = currentDate.getMonth()
+      User.findAll()
+      .then(list => {
+        for (let i = 0; i < list.length; i++){
+          let date = new Date (list[i].dob)
+          let month = date.getMonth()
+          console.log('date : ',date,'month : ',month)
+          if (month == currentMonth){
+            result.push(list[i])
+          }
+          console.log(currentMonth)
+        }
+        response.json({
+          total:result.length,
+          data:result
+        })
+      })
+    }
+
 }
 
 module.exports = UserController
