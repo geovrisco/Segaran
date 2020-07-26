@@ -14,6 +14,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import {url} from '../../config/variabels'
 import {setUserData} from '../../store/actions/UsersAction'
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn(props) {
   const dispatch = useDispatch()
+  const history = useHistory()
   const classes = useStyles();
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
@@ -131,7 +133,7 @@ export default function SignIn(props) {
           </Button>
           <Grid container>
             <Grid item>
-              <Link onClick={props.toggle} variant="body2" href="#">
+              <Link onClick={() => history.push('/signUp')} variant="body2" href="#">
                 {"Belum punya akun? Buat akun sekarang!"}
               </Link>
             </Grid>

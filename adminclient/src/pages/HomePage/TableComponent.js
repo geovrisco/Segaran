@@ -8,7 +8,7 @@ import {
   TableRow,
   Paper
 } from '@material-ui/core'
-import {Delete } from '@material-ui/icons'
+import {Delete,Edit } from '@material-ui/icons'
 import {makeStyles} from '@material-ui/core'
 
 
@@ -72,6 +72,17 @@ function TableComponent (props){
                               onMouseLeave ={() => hoverFalse()}
                               onClick={() => props.functDeleteItem(row.id)}
                               ></Delete>
+                            </TableCell>
+                          )
+                        } else if (`${column}`==='edit'){
+                          return (
+                            <TableCell>
+                              <Edit
+                              style={hover ? {cursor:'pointer',color:'blue'} : {color:'blue'} }
+                              onMouseOver={() => hoverTrue()}
+                              onMouseLeave ={() => hoverFalse()}
+                              onClick={() => props.functEditItem(row.id,row)}
+                              ></Edit>
                             </TableCell>
                           )
                         }

@@ -10,3 +10,7 @@ export const setUserData = (token,role) => {
     })
   }
 }
+
+export const removeUserData = {
+  type:"REMOVE_USERDATA"
+}

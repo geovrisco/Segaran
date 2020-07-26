@@ -1,6 +1,9 @@
 
 const initialState = {
-  userData:null
+  userData:{
+    role:null,
+    token:null
+  }
 }
 
 const UserReducer = ( state = initialState, action)=>{
@@ -8,6 +11,10 @@ const UserReducer = ( state = initialState, action)=>{
   switch(action.type){
     case 'SET_USERDATA':
       return {...state, userData:action.payload}
+
+    case 'REMOVE_USERDATA':
+      return{...state, userData:null}
+
     default :
       return state
   }

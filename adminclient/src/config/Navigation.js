@@ -32,11 +32,10 @@ function Navigation(){
       } 
       return true
     }
-
     getLocalUserData()
-  },[])
+  },[dispatch])
 
-  console.log(userData,'ini user data')
+  
   return(
     <>
       {
@@ -60,7 +59,8 @@ function Navigation(){
                   <ArticleForm command={"create"}/>
                 </Container>
               </Route>
-              <Route exact path ="/article/:id">
+              <Route exact path ="/article/:id"
+              >
                 <Container>
                   <ArticleForm command={'update'}/>
                 </Container>
@@ -70,12 +70,17 @@ function Navigation(){
       </Router>
       } 
       {
-        !userData && !toggleForm &&
-        <SignIn toggle={toggle}></SignIn>
-      }
-      {
-        !userData && toggleForm &&
-        <SignUp toggle={toggle}></SignUp>
+        !userData &&
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <SignIn toggle={toggle}></SignIn>
+            </Route>
+            <Route exact path="/signUp">
+              <SignUp toggle={toggle}></SignUp>
+            </Route>
+          </Switch>
+        </Router>
       }
     </>
   )

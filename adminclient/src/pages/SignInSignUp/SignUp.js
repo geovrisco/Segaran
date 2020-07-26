@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp(props) {
   const classes = useStyles();
-
+  const history = useHistory()
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -125,7 +126,7 @@ export default function SignUp(props) {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" onClick={props.toggle} variant="body2">
+              <Link  onClick={() => history.push('/')} variant="body2">
                 Sudah punya akun? Masuk
               </Link>
             </Grid>

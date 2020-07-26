@@ -3,11 +3,15 @@ import {TextField, Container, Select, InputLabel, MenuItem, Button, Typography} 
 import axios from 'axios'
 import { url } from '../../config/variabels';
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams, useLocation } from 'react-router-dom'
 import {getArticles} from '../../store/actions/ArticlesAction'
 
 
 function ArticleForm (props){
+  const location = useLocation()
+  let {id} = useParams()
+  console.log(id,'useparams')
+  console.log(location.state)
 
   const userData = useSelector(state => state.UserReducer.userData)
   const dispatch = useDispatch()
@@ -15,26 +19,26 @@ function ArticleForm (props){
   console.log(userData, 'ini user data..............')
 
   console.log(props)
-  const [title, setTitle] = useState(null);
-  const [category, setCategory] = useState(null);
-  const [text, setText] = useState (null)
+  const [title, setTitle] = useState( props.command ==='update' ? location.state.title : '');
+  const [category, setCategory] = useState(props.command ==='update' ? location.state.category : '');
+  const [text, setText] = useState (props.command ==='update' ? location.state.text : '')
   const handleTitle = (e) => {
-    if(props.command==="create"){
+    
       setTitle(e.target.value)
       console.log('title : ',title)
-    }
+   
   }
   const handleCategory = (e) => {
-    if(props.command==="create"){
+    
       setCategory(e.target.value)
       console.log('category : ',category)
-    }
+    
   }
   const handleText = (e) => {
-    if(props.command==="create"){
+    
       setText(e.target.value)
       console.log('text : ', text)
-    }
+    
   }
 
   const sendNotification = async () => {
@@ -62,14 +66,28 @@ function ArticleForm (props){
     if (props.command==="create"){
       console.log('create data')
       axios.post(`${url}/articles/`,data,config)
-      .then( data => {
-        console.log(data)
+      .then( suksesCreate => {
+        console.log(suksesCreate)
         dispatch(getArticles())
         sendNotification()
         history.push('/')
       })
       .catch(error => {
         console.log(error.response)
+      })
+    }
+    if (props.command==='update'){
+      console.log('update data')
+      axios.put(`${url}/articles/${id}`,data,config)
+      .then(suksesUpdate => {
+        console.log(suksesUpdate)
+        dispatch(getArticles())
+        sendNotification()
+        history.push('/')
+      })
+      .catch(errorUpdate => {
+        console.log('error update')
+        console.log(errorUpdate)
       })
     }
   }
@@ -82,7 +100,14 @@ function ArticleForm (props){
   return(
     <Container>
       <div style={{display:'flex', justifyContent:"center"}}>
-        <Typography variant="h4" > Buat Artikel Baru </Typography>
+        {
+          props.command==='create' && 
+          <Typography variant="h4" > Buat Artikel Baru </Typography>
+        }
+        {
+          props.command==='update' && 
+          <Typography variant="h4" > Edit Artikel </Typography>
+        }
       </div>
       <form>
         <TextField
@@ -94,15 +119,26 @@ function ArticleForm (props){
           label="Judul"
           name="judul"
           onChange={(e) => handleTitle(e)}
+          value={title}
           autoFocus/>
           <InputLabel id="kategori" >Kategori</InputLabel>
-          <Select labelId="kategori" id="select" required name="kategori"
-             placeholder="pilih kategori"
-             onChange={(e) => handleCategory(e)}
-             defaultValue="renungan" >
+          <select name='category'
+            onChange={(e) =>handleCategory(e)}
+            style={{height:"40px",fontSize:"15px"}}
+          >
+            <option value="renungan"
+              style={{height:"40px",fontSize:"15px"}}
+            >Renungan</option>
+            <option value="pengumuman"
+              style={{height:"40px",fontSize:"15px"}}
+            >Pengumuman</option>
+          </select>
+          {/* <Select labelId="kategori" id="select" required name="kategori"
+          value={category}
+             onChange={(e) => handleCategory(e)}>
             <MenuItem value="renungan">Renungan Harian</MenuItem>
             <MenuItem value="pengumuman">Pengumuman</MenuItem>
-          </Select>
+          </Select> */}
 
           <TextField
           variant="outlined"
@@ -114,6 +150,7 @@ function ArticleForm (props){
           placeholder={'ketik <enter> untuk mengganti paragraf. \ncontoh : \nparagraf 1 adalah paragraf 1. <enter> paragraf2 adalah paragraf 2'}
           name="text"
           rows={8}
+          value={text}
           onChange={(e) => handleText(e)}
           autoFocus/>
 
@@ -135,8 +172,18 @@ function ArticleForm (props){
           name="media"
           autoFocus/> */}
           <div style={{ display :"flex" , justifyContent : "center" }}>
-           <Button variant="contained" color="primary" onClick={()=>submit()}>Publikasikan</Button>
-           <Button variant="contained" color="secondary" onClick={ ()=>goback() } >Batal</Button>
+            { props.command==="create" &&
+            <>
+              <Button variant="contained" color="primary" onClick={()=>submit()}>Publikasikan</Button>
+              <Button variant="contained" color="secondary" onClick={ ()=>goback() } >Batal</Button>
+            </>
+            }
+            { props.command==="update" &&
+            <>
+              <Button variant="contained" color="primary" onClick={()=>submit()}>Perbaharui</Button>
+              <Button variant="contained" color="secondary" onClick={ ()=>goback() } >Batal</Button>
+            </>
+            }
           </div>
         </form>
     </Container>

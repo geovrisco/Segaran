@@ -1,13 +1,4 @@
 import React,{useEffect,useCallback} from 'react'
-import { 
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper
-} from '@material-ui/core'
 import { useDispatch,useSelector} from 'react-redux'
 import {getUsers} from '../store/actions/ArticlesAction'
 
@@ -32,7 +23,7 @@ function UsersPage (){
   
   return(
     <div style={{display:'flex', flexDirection:'column', alignItems:"center" }}>
-      <contai>
+      <>
         <TableComponent
         row={users}
         label='Data Jemaat'
@@ -41,7 +32,7 @@ function UsersPage (){
         width={1000}
         functDeleteItem={functDeleteItem}
         ></TableComponent>
-      </contai>
+      </>
     </div> 
   )
 }
