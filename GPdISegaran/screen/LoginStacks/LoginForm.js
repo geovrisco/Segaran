@@ -1,8 +1,9 @@
-import React, {  useState } from "react";
+import React, {  useState,useContext,createContext, useEffect } from "react";
 import { View, Dimensions, TouchableOpacity } from "react-native";
 import { Icon, Input, Text } from "react-native-elements";
 import axios from "axios";
 import styles from "../../styles";
+import {AuthContext} from '../../config/context'
 
 import {setAsyncStorage} from '../../helpers/helper'
 import {url} from '../../config/variables'
@@ -13,7 +14,15 @@ const MAX_HEIGHT = Dimensions.get("screen").height;
 export default function LoginForm(props) {
   const [email, setEmail]= useState('')
   const [password, setPassword]= useState('')
-  // console.log(props.navigation,"=a=a=a=a=a=a=a==a=a=a=a=a=a==a=a")
+  
+
+  const {loginState} = useContext(AuthContext)
+  const {authContext} = useContext(AuthContext)
+  useEffect(() => {
+    console.log(loginState,'ini login')
+    console.log(authContext,'ini auth')
+  },[])
+
 
   const login = async () => {
     try {
@@ -40,7 +49,7 @@ export default function LoginForm(props) {
     }
   };
 
-  console.log(props);
+  // console.log(props);
   return (
     <View style={styles.container2}>
       {
@@ -51,7 +60,7 @@ export default function LoginForm(props) {
           <View style={styles.inputContainer}>
             <Input
               placeholder="Email@mail.com"
-              onChangeText={(e) => props.setEmail(e)}
+              onChangeText={(e) =>setEmail(e)}
               leftIcon={
                 <Icon
                   name="envelope"
@@ -63,14 +72,14 @@ export default function LoginForm(props) {
             />
             <Input
               placeholder="Password"
-              onChangeText={(e)=>props.setPassword(e)}
+              onChangeText={(e)=>setPassword(e)}
               secureTextEntry={true}
               leftIcon={<Icon name="lock" size={30} color="#ff7f50" />}
             />
           </View>
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
-              onPress={() => login()}
+              onPress={() => authContext.signIn(email,password)}
               title="Masuk"
               style={{
                 width: (MAX_WIDTH * 0.75) / 2,

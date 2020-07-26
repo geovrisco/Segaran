@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -7,6 +7,7 @@ import HomeScreen from '../screen/HomeScreen';
 import DetailScreen from '../screen/HomeStacks/Detail';
 import LoginScreen from '../screen/LoginScreen';
 import ProfileScreen from '../screen/ProfileScreen';
+import {AuthContext} from './context'
 import { AsyncStorage } from 'react-native';
 
 const NewsStack = createStackNavigator ();
@@ -58,37 +59,29 @@ const AppTabsLoginScreen = ()=>(
 )
 
 
-export default () =>{
+export default (props) =>{
 
-  const [name,setName]=useState(null)
-  const [token,setToken]=useState(null)
-  const [id,setId]=useState(null)
-  const [role,setRole]=useState(null)
-
-  async function getAsyncStorageData(){
-    try {
-      const AsyncName = await AsyncStorage.getItem('name')
-      const AsyncToken = await AsyncStorage.getItem('token')
-      const AsyncRole = await AsyncStorage.getItem('role')
-      const AsyncId = await AsyncStorage.getItem('id')
-      setName(AsyncName)
-      setToken(AsyncToken)
-      setRole(AsyncRole)
-      setId(AsyncId)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const {loginState} = useContext(AuthContext)
 
   useEffect(()=>{
-    getAsyncStorageData()
+   console.log(loginState,'ini loginstate')
   },[])
 
-  return (
-    <NavigationContainer>
-      {token ? <AppTabsLoginScreen/> : <AppTabScreen/>}
+  if (loginState.token !==null){
+    return (
+      
+        <NavigationContainer>
+           <AppTabsLoginScreen></AppTabsLoginScreen>
+        </NavigationContainer>
+    
+      
+    )
+  } else if (loginState.token === null){
+    return (
+      <NavigationContainer>
+      <AppTabScreen></AppTabScreen>
     </NavigationContainer>
-
-  )
+    )
+  }
 }
 

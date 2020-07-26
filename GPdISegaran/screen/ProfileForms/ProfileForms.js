@@ -1,19 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, ScrollView, Picker, AsyncStorage } from 'react-native'
 import {Input, Icon, Button} from 'react-native-elements'
 import styles from '../../styles'
 import DateTimePicker from '@react-native-community/datetimepicker'
-
+import {AuthContext} from '../../config/context'
 
 export default function ProfileForms(props){
   // console.log(props)
   const [date, setDate] = useState( new Date('1994-04-23'))
   const [showDate, setShowDate] = useState(false)
-
+  const {loginState,authContext} = useContext(AuthContext)
   const toggleShowDate = () =>{
     setShowDate(!showDate)
   }
 
+  useEffect(() => {
+    console.log(loginState,authContext)
+  },[])
   async function logout(){
     // console.log('keluar')
    try{
@@ -28,11 +31,8 @@ export default function ProfileForms(props){
  }
 
   const onDateChange =(event, selectedDate) =>{
-    // console.log(event,'ini event')
-    // console.log(selectedDate,'ini selected date')
     setShowDate(!showDate)
     props.setDob(new Date(selectedDate))
-    // console.log(props.dob)
     setDate(new Date(selectedDate))
   }
 
@@ -114,7 +114,7 @@ export default function ProfileForms(props){
           <Button
             mode="contained"
             title="LogOut"
-            onPress={()=>logout()}
+            onPress={()=>authContext.signOut()}
             buttonStyle={{width:100,backgroundColor:"red"}}
           ></Button>
       </View>

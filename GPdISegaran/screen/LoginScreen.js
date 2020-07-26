@@ -11,7 +11,7 @@ function LoginScreen({navigation}) {
   
   const toggleForm = () => {
     setLoginForm(!loginForm);
-    console.log(loginForm);
+    // console.log(loginForm);
   };
 
   const onChangePhone = (e) => {

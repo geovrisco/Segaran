@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
     fontSize:30
   },
   paragraf:{
-    marginTop:MAX_HEIGHT*0.01
+    marginTop:MAX_HEIGHT*0.03,
+    textAlign:"justify"
   },
   container2:{
     backgroundColor:'#1e90ff',
@@ -81,7 +82,12 @@ const styles = StyleSheet.create({
   profileFormMulti:{
     width:MAX_WIDTH*0.65,
     height:MAX_HEIGHT*0.3
-  }
+  },
+  displayParagraph:{
+    width:MAX_WIDTH*0.95,
+    
+  },
+  
 });
 
 export default styles

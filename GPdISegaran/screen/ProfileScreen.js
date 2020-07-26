@@ -1,52 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { KeyboardAvoidingView, Text, View, AsyncStorage, ScrollView } from 'react-native'
 
 import ProfileForms from './ProfileForms/ProfileForms'
 import axios from 'axios'
 import styles from "../styles";
 import {url} from '../config/variables'
+import {AuthContext} from '../config/context'
 
 
 
 export default function ProfileScreen (){
-  const [isLoading,setIsLoading] = useState(true)
-  const [id, setId] = useState(null)
-  const [address,setAddress] = useState(null)
-  const [dob,setDob] = useState(null)
-  const [fullname,setFullname]=useState(null)
-  const [gender, setGender] = useState(null)
-  const [name, setName] = useState(null)
-  const [phone1,setPhone1] = useState(null)
-  const [phone2,setPhone2] = useState(null)
+  const {loginState} = useContext(AuthContext)
+  const [isLoading,setIsLoading] = useState(false)
+  const [id, setId] = useState(loginState.id)
+  const [address,setAddress] = useState(loginState.address)
+  const [dob,setDob] = useState(loginState.dob ? new Date (loginState.dob) : new Date('1994-04-23' ))
+  const [fullname,setFullname]=useState(loginState.fullName)
+  const [gender, setGender] = useState(loginState.gender)
+  const [name, setName] = useState(loginState.name)
+  const [phone1,setPhone1] = useState(loginState.phone1)
+  const [phone2,setPhone2] = useState(loginState.phone2)
   let desperateId = null
 
   async function getUserData(){
-    console.log('getting userr data')
-    try {
-      const userId = await AsyncStorage.getItem('id')
-      desperateId=userId
-      let result = await axios.get(`${url}/users/${desperateId}`)
-      // console.log(result.data)
-      setAddress(result.data.address)
-      setId(result.data.id)
-      setDob(result.data.dob)
-      setGender(result.data.gender)
-      setName(result.data.name)
-      setPhone1(result.data.phone1)
-      setPhone2(result.data.phone2)
-      setFullname(result.data.fullname)
-      setIsLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
+    // console.log()
+    
   }
 
 
 
   function updateUserData(){
-    // setIsLoading(true)
-    console.log(desperateId,'parameter update')
-    axios.put(`${url}/users/${idg}`,{
+    setIsLoading(true)
+    console.log(address,dob,fullname,gender,name,phone1,phone2,'parameter update')
+    axios.put(`${url}/users/${id}`,{
       address:address,
       dob:dob,
       fullname:fullname,
@@ -56,7 +42,7 @@ export default function ProfileScreen (){
       phone2:phone2
     })
     .then(data=>{
-      console.log(data,"sukses update")
+      alert('update berhasil')
       setIsLoading(false)
     })
     .catch(err=>{
@@ -74,7 +60,7 @@ export default function ProfileScreen (){
   return( 
     <ScrollView>
     <KeyboardAvoidingView behavior={Platform.OS == "ios"? "padding" : "height"} style={styles.container}>
-      {
+      { !isLoading &&
         <ProfileForms
           id={id}
           address={address}
@@ -93,6 +79,10 @@ export default function ProfileScreen (){
           setPhone2={setPhone2}
           updateUserData={updateUserData}
         />
+      }
+      {
+        isLoading &&
+        <Text>Mohon Tunggu</Text>
       }
     </KeyboardAvoidingView>
     </ScrollView>

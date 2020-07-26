@@ -1,19 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Text, View, KeyboardAvoidingView, FlatList, AsyncStorage } from "react-native";
 import styles from "../styles";
 import { ListItem } from "react-native-elements";
 import axios from "axios";
 import {url}from '../config/variables'
+import {AuthContext} from '../config/context'
+// import { login } from "../../Server/controllers/user";
 
 function HomeScreen({ navigation }) {
 
-
+  const {loginState} = useContext(AuthContext)
 
   return (
     <>
       <KeyboardAvoidingView style={styles.containerGeo}>
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <Text>Selamat Datang silahkan masuk/daftar</Text>
+          {
+            loginState && loginState.name &&
+            <Text>Selamat Datang {loginState.name}</Text>
+          }
+          {
+            loginState && !loginState.name &&
+            <Text>Selamat Datang</Text>
+          }
+          {
+            !loginState&&
+            <Text>Selamat Datang silahkan masuk/daftar</Text>
+          }
         </View>
         <ListContent navigation={navigation}></ListContent>
       </KeyboardAvoidingView>
@@ -46,7 +59,7 @@ function ListContent(navigation) {
 
   useEffect(() => {
     getArticles();
-  }, []);
+  },[]);
 
   // console.log("home_screen");
   return (

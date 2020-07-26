@@ -32,7 +32,7 @@ export default function Detail({route}){
         !isLoading &&
         <View>
           <Text h4>{content.title}</Text>
-          <ScrollView>
+          <ScrollView style={styles.displayParagraph}>
             { paragraph &&
               paragraph.map((element,idx) => {
                 return <Text style={styles.paragraf} key={idx}> {element} </Text>
