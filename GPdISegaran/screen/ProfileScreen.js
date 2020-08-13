@@ -23,7 +23,7 @@ export default function ProfileScreen (){
   let desperateId = null
 
   async function getUserData(){
-    // console.log()
+    console.log(loginState.fullName,'ini profilescreen')
     
   }
 

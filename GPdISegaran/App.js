@@ -113,7 +113,7 @@ export default function App() {
           address:result.data.userData.address,
           dob:result.data.userData.dob,
           email:result.data.userData.email,
-          fullName: result.data.userData.fullname,
+          fullname: result.data.userData.fullname,
           name:result.data.userData.name,
           gender:result.data.userData.gender,
           phone1:result.data.userData.phone1,
@@ -155,7 +155,8 @@ export default function App() {
     loadStaticFiles()
     retrieveData()
     async () => {
-      if (retrieveData()){
+      let smallID= retrieveData()
+      if (smallID>0()){
         try {
           let result = await axios.get(`${url}/users/${retrieveData()}`)
           console.log(result.data, 'ini dari retrievedata')

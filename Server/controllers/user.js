@@ -51,9 +51,7 @@ class UserController{
                 var token = jwt.sign({id:userData.id, name:userData.name, role:userData.role,},process.env.SECRET)
                 response.json({
                     token:token,
-                    name:userData.name,
-                    role:userData.role,
-                    id:userData.id
+                    userData:userData
                 })
             } else {
               throw({code:403, message:'user id tidak ditemukan!'})
@@ -81,6 +79,7 @@ class UserController{
       )
       .then(data=>{
         response.json(data)
+        console.log(data,'ini update')
       })
       .catch(err =>{
         next(err)

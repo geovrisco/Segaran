@@ -19,7 +19,7 @@ class ArticleController {
     }
 
     static findAll(request, response, next){
-        Article.findAll()
+        Article.findAll({order:[['updatedAt','DESC']]})
         .then(data=>{
             response.json(data)
         })

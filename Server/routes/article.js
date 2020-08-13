@@ -5,8 +5,9 @@ const authorization = require('../middleware/authorization')
 
 ArticleRoute.get('/', ArticleController.findAll)
 ArticleRoute.get('/:id', ArticleController.findById)
-ArticleRoute.post('/', authenticator, authorization,  ArticleController.create)
-ArticleRoute.put('/:id', authenticator, authorization,  ArticleController.update)
-ArticleRoute.delete('/:id', authenticator, authorization, ArticleController.deleteById)
+ArticleRoute.use(authenticator,authorization)
+ArticleRoute.post('/',  ArticleController.create)
+ArticleRoute.put('/:id',  ArticleController.update)
+ArticleRoute.delete('/:id', ArticleController.deleteById)
 
 module.exports = ArticleRoute
